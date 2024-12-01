@@ -14,7 +14,7 @@ return {
         "j-hui/fidget.nvim",
     },
 
-    config = function ()
+    config = function()
         -- Grab the functionality of cmp & lsp to give to mason
         local cmp = require("cmp")
         local cmp_lsp = require("cmp_nvim_lsp")
@@ -33,7 +33,8 @@ return {
                 "clangd",
                 "cmake",
                 "lua_ls",
-                "ruff",
+                "pyright", -- For completion, hover, etc.
+                "ruff",    -- For linting, formatting, etc.
                 "bashls",
             },
             handlers = {
@@ -43,7 +44,7 @@ return {
                         capabilities = capabilities,
                     }
                 end,
-                ["lua_ls"] = function ()
+                ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup({
                         capabilities = capabilities,
@@ -57,6 +58,19 @@ return {
                         }
                     })
                 end,
+                -- Disable pyright linting and formatting
+                ["pyright"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.pyright.setup({
+                        capabilities = capabilities,
+                        settings = {
+                            pyright = { disableOrganizeImports = true },
+                            python = {
+                                analysis = { ignore = { "*" } }
+                            }
+                        }
+                    })
+                end
             },
         })
 
@@ -77,11 +91,11 @@ return {
                 ["<C-Space>"] = cmp.mapping.complete(),
             }),
             sources = cmp.config.sources({
-                    { name = "nvim_lsp" },
-                    { name = "luasnip" },
-                }, {
-                    { name = "buffer" }
-                })
+                { name = "nvim_lsp" },
+                { name = "luasnip" },
+            }, {
+                { name = "buffer" }
+            })
         })
 
         -- Idk exactly what this does ...
