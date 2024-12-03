@@ -64,9 +64,15 @@ return {
                     lspconfig.pyright.setup({
                         capabilities = capabilities,
                         settings = {
-                            pyright = { disableOrganizeImports = true },
+                            pyright = {
+                                disableOrganizeImports = true,
+                                disableTaggedHints = true,
+                            },
                             python = {
-                                analysis = { ignore = { "*" } }
+                                analysis = {
+                                    diagnosticMode = "off",
+                                    typeCheckingMode = "basic"
+                                }
                             }
                         }
                     })
