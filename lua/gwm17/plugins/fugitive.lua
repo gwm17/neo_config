@@ -1,7 +1,8 @@
 return {
-    "tpope/vim-fugitive",
+	"tpope/vim-fugitive",
 
-    config = function ()
-        vim.keymap.set("n", "<leader>gt", vim.cmd.Git)
-    end
+	config = function()
+		local wk = require("which-key")
+		wk.add({ { "<leader>gt", vim.cmd.Git, desc = "Fugitive Open Git", mode = "n" } })
+	end,
 }
