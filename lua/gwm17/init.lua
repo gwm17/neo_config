@@ -5,6 +5,15 @@ require("gwm17.lazy_init")
 local gwm_group = vim.api.nvim_create_augroup("gwm17", {})
 local autocmd = vim.api.nvim_create_autocmd
 
+-- Setup default LSP behavior
+vim.lsp.config("*", {
+	capabilities = { textDocument = { semanticTokens = { multilineTokenSupport = true } } },
+	root_markers = { ".git" },
+})
+
+-- Enable LSPs
+vim.lsp.enable({ "rust_analyzer", "pyright", "ruff", "clangd", "lua_ls" })
+
 -- LSP keymaps on a per buffer basis
 autocmd("LSPAttach", {
 	group = gwm_group,
