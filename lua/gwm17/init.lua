@@ -11,6 +11,14 @@ vim.lsp.config("*", {
     root_markers = { ".git" },
 })
 
+autocmd("FileType", {
+    group = gwm_group,
+    pattern = { "cpp", "c", "python", "rust", "json", "yaml", "lua", "markdown", "bash", "zsh" },
+    callback = function()
+        vim.treesitter.start()
+    end
+})
+
 
 -- LSP keymaps on a per buffer basis
 autocmd("LSPAttach", {
